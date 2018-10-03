@@ -23,12 +23,8 @@
       Selected Hero: {{selectedHero}}
     </div>
 
-    <form @submit="getHeroData()">
-        <v-btn type="submit">Get Hero Data</v-btn>
-    </form>
-
     <div>
-      Info: {{info}}
+      Heroes: {{ heroes }}
     </div>
 <!--
     <form @submit="storeHeroData()">
@@ -42,7 +38,7 @@
 import { db } from '../main'
 import axios from 'axios'
 export default {
-  name: 'HelloWorld',
+  name: 'HeroList',
   data () {
     return {
       dotaheroes: [],
@@ -50,12 +46,21 @@ export default {
       images: '',
       value: '',
       selectedHero: '',
-      info: []
     }
   },
+  /*
   firestore () {
     return {
       dotaheroes: db.collection('dotaheroes')
+    }
+  },
+  */
+  mounted () {
+    this.refreshHeroesFromOpenDota()
+  },
+  computed: {
+    heroes () {
+      return this.$store.getters.heroes
     }
   },
   methods: {
@@ -65,19 +70,18 @@ export default {
     randomHero () {
       this.selectedHero = 'Axe'
     },
-    getHeroData () {
-      axios
-      .get('https://api.opendota.com/api/heroes')
-      .then(response => (this.info = response))
-    },
+    refreshHeroesFromOpenDota () {
+      this.$store.dispatch('refreshHeroesFromOpenDota')
+    }/*,
     storeHeroData () {
-      let tempheroes = this.info.data
+      let tempheroes = this.heroes
       for (let hero in tempheroes) {
         db.collection('dotaheroes').add({
           name: tempheroes[hero].localized_name
         })
       }
     }
+    */
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import DBService from '@/services/dbService'
 import * as firebase from 'firebase'
 
 Vue.use(Vuex)
@@ -8,11 +9,15 @@ export default new Vuex.Store({
   state: {
     loading: false,
     user: null,
-    error: null
+    error: null,
+    heroes: []
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
+    },
+    setHeroes (state, payload) {
+      state.heroes = payload
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -25,6 +30,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async refreshHeroesFromOpenDota ({commit}) {
+      const response = await DBService.fetchHeroesFromOpenDota()
+      let heroes = response.data
+      commit('setHeroes', heroes)
+    },
     signUserIn ({commit, dispatch}, payload) {
       commit('setLoading', true)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
@@ -61,7 +71,7 @@ export default new Vuex.Store({
       commit('clearError')
     },
     async getUserFromDB ({commit}, payload) {
-      const response = await dbService.fetchUserFromDB(payload.uid)
+      const response = await DBService.fetchUserFromDB(payload.uid)
       let userObj = response.data
       userObj.email = payload.email
       console.log('userobj', userObj)
@@ -77,6 +87,9 @@ export default new Vuex.Store({
     },
     error (state) {
       return state.error
+    },
+    heroes (state) {
+      return state.heroes
     }
   }
 })
