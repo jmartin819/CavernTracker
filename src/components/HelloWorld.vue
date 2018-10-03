@@ -9,25 +9,38 @@
 
     <div>
       <article v-for="(hero, idx) in dotaheroes" :key="idx">
-        <img :src="hero.images">
+<!--        <img :src="hero.images">-->
         <h1>{{ hero.name }}</h1>
-        <h1>{{ hero.value }}</h1>
+<!--        <h1>{{ hero.value }}</h1>-->
       </article>
     </div>
 
     <form @submit="randomHero()">
         <button type="submit">Select Hero</button>
     </form>
-    
+
     <div>
       Selected Hero: {{selectedHero}}
     </div>
 
+    <form @submit="getHeroData()">
+        <button type="submit">Get Hero Data</button>
+    </form>
+
+    <div>
+      Info: {{info}}
+    </div>
+<!--
+    <form @submit="storeHeroData()">
+        <button type="submit">Store Hero Data</button>
+    </form>
+-->
   </div>
 </template>
 
 <script>
 import { db } from '../main'
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   data () {
@@ -36,12 +49,13 @@ export default {
       name: '',
       images: '',
       value: '',
-      selectedHero: ''
+      selectedHero: '',
+      info: []
     }
   },
   firestore () {
     return {
-      dotaheroes: db.collection('dotaheroes').orderBy('value')
+      dotaheroes: db.collection('dotaheroes')
     }
   },
   methods: {
@@ -50,6 +64,19 @@ export default {
     },
     randomHero () {
       this.selectedHero = 'Axe'
+    },
+    getHeroData () {
+      axios
+      .get('https://api.opendota.com/api/heroes')
+      .then(response => (this.info = response))
+    },
+    storeHeroData () {
+      let tempheroes = this.info.data
+      for (let hero in tempheroes) {
+        db.collection('dotaheroes').add({
+          name: tempheroes[hero].localized_name
+        })
+      }
     }
   }
 }
