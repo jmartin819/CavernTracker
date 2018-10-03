@@ -1,30 +1,45 @@
-# caverntracker
+## Project setup
 
-> A Vue.js project
+Additional Steps added 10/2/2018
 
-## Build Setup
+Install vue-cli
+npm install @vue/cli -g
 
-``` bash
-# install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 
-# build for production with minification
-npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```
+npm install
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Run your end-to-end tests
+```
+npm run test:e2e
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
