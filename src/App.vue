@@ -32,6 +32,7 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-btn flat to="/herolist">Heroes</v-btn>
+      <v-btn flat to="/userstats">User Stats</v-btn>
       <v-spacer></v-spacer>
 
       <span v-if="userIsAuthenticated">Welcome {{ user.email }}</span>

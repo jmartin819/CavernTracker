@@ -10,7 +10,8 @@ export default new Vuex.Store({
     loading: false,
     user: null,
     error: null,
-    heroes: []
+    heroes: [],
+    stats: []
   },
   mutations: {
     setUser (state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setHeroes (state, payload) {
       state.heroes = payload
+    },
+    setStats (state, payload) {
+      state.stats = payload
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -34,6 +38,12 @@ export default new Vuex.Store({
       const response = await DBService.fetchHeroesFromOpenDota()
       let heroes = response.data
       commit('setHeroes', heroes)
+    },
+    async getUserStatsFromOpenDota ({commit}, payload) {
+      const response = await DBService.fetchUserStatsFromOpenDota(payload.userID)
+      let stats = response.data
+  //    console.log(stats)
+      commit('setStats', stats)
     },
     signUserIn ({commit, dispatch}, payload) {
       commit('setLoading', true)
@@ -90,6 +100,9 @@ export default new Vuex.Store({
     },
     heroes (state) {
       return state.heroes
+    },
+    stats (state) {
+      return state.stats
     }
   }
 })
