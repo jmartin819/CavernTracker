@@ -1,8 +1,9 @@
 <template>
   <div>
-    <form @submit="getUserStatsFromOpenDota(userID)">
+    <form>
+      <!-- @submit="getUserStatsFromOpenDota(userID)"> -->
         <input v-model="userID" placeholder="Enter UserID">
-        <v-btn type="submit">Lookup User</v-btn>
+        <v-btn v-on:click="getUserStatsFromOpenDota(userID)">Lookup User</v-btn>
     </form>
     <div>
       Stats: {{ stats }}
