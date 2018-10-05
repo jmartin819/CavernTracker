@@ -9,6 +9,11 @@ npm install
 
 npm run serve
 
+Additional Steps added 10/05/2018
+
+Download and install Heroku CLI
+https://devcenter.heroku.com/articles/heroku-cli
+
 
 ```
 npm install
