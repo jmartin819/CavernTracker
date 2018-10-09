@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { db } from '../main'
+// import { db } from '../main'
 import axios from 'axios'
 export default {
   name: 'HeroList',

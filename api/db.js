@@ -22,4 +22,8 @@ admin.initializeApp({
 
 var db = admin.firestore();
 
+const settings = { timestampsInSnapshots: true }
+
+admin.firestore().settings(settings);
+
 module.exports = db

@@ -5,6 +5,7 @@ import SignIn from '@/views/SignIn'
 import HeroList from '@/views/HeroList'
 import UserStats from '@/views/UserStats'
 import AuthGuard from './plugins/auth-guard'
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
@@ -18,12 +19,17 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: UserHome
+      component: Home
     },
     {
       path: '/signin',
       name: 'SignIn',
       component: SignIn
+    },
+    {
+      path: '/home',
+      name: 'UserHome',
+      component: UserHome
     },
     {
       path: '/about',
@@ -50,7 +56,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: UserStats
-  //    beforeEnter: AuthGuard
+      //    beforeEnter: AuthGuard
     }
   ]
 })

@@ -38,18 +38,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async refreshHeroesFromOpenDota ({commit}) {
+    async refreshHeroesFromOpenDota ({ commit }) {
       const response = await DBService.fetchHeroesFromOpenDota()
       let heroes = response.data
       commit('setHeroes', heroes)
     },
-    async getUserStatsFromOpenDota ({commit}, payload) {
+    async getUserStatsFromOpenDota ({ commit }, payload) {
       const response = await DBService.fetchUserStatsFromOpenDota(payload.userID)
       let stats = response.data
-  //    console.log(stats)
+      // console.log(stats)
       commit('setStats', stats)
     },
-    signUserIn ({commit, dispatch}, payload) {
+    signUserIn ({ commit, dispatch }, payload) {
       commit('setLoading', true)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
@@ -58,7 +58,7 @@ export default new Vuex.Store({
             console.log('login worked')
             // console.log(user)
             commit('setUser', user.user)
-            dispatch('getUserFromDB', {'uid': user.user.uid, 'email': user.user.email})
+            dispatch('getUserFromDB', { 'uid': user.user.uid, 'email': user.user.email })
           }
         )
         .catch(
@@ -69,7 +69,7 @@ export default new Vuex.Store({
           }
         )
     },
-    logout ({commit}) {
+    logout ({ commit }) {
       commit('setLoading', true)
       firebase.auth().signOut()
         .then(() => {
@@ -81,15 +81,15 @@ export default new Vuex.Store({
           commit('setError', error)
         })
     },
-    clearError ({commit}) {
+    clearError ({ commit }) {
       commit('clearError')
     },
-    async getUserFromDB ({commit}, payload) {
+    async getUserFromDB ({ commit }, payload) {
       const response = await DBService.fetchUserFromDB(payload.uid)
       // let userObj = this.getters.user
       // console.log(response.data)
 
-      console.log("in function")
+      // console.log('in function')
       commit('setUserInfo', response.data)
     }
   },
