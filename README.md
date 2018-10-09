@@ -14,6 +14,16 @@ Additional Steps added 10/05/2018
 Download and install Heroku CLI
 https://devcenter.heroku.com/articles/heroku-cli
 
+Additional Steps added 10/08/2018
+
+Do NPM install
+Need to run 2 terminals at the same time
+1. nodemon server.js
+2. npm run serve
+
+src/services/api has a hard coded url to #1, make sure that Axios API URL is pointed at local Node server URL
+Visit the URL from #2
+
 
 ```
 npm install

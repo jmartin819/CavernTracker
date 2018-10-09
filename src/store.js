@@ -54,7 +54,7 @@ export default new Vuex.Store({
             console.log('login worked')
             // console.log(user)
             commit('setUser', user.user)
-            // dispatch('getUserFromDB', {'uid': user.user.uid, 'email': user.user.email})
+            dispatch('getUserFromDB', {'uid': user.user.uid, 'email': user.user.email})
           }
         )
         .catch(
@@ -82,10 +82,12 @@ export default new Vuex.Store({
     },
     async getUserFromDB ({commit}, payload) {
       const response = await DBService.fetchUserFromDB(payload.uid)
-      let userObj = response.data
-      userObj.email = payload.email
-      console.log('userobj', userObj)
-      commit('setUser', response.data)
+      let userObj = this.getters.user
+      console.log(response.data)
+      userObj["dbData"] = response.data
+
+      console.log("in function")
+      commit('setUser', userObj)
     }
   },
   getters: {

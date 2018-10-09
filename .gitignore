@@ -6,6 +6,10 @@ npm-debug.log
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
+#firebase stuff
+firebase-debug.log
+local
+
 # local env files
 /*.env
 .env.local

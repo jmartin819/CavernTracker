@@ -1,40 +1,38 @@
 'use strict'
+var db = require('../db')
 
-var mongoose = require('mongoose')
-var User = mongoose.model('userModel')
+var usersRef = db.collection('users')
 
 exports.userCheck = function (req, res) {
   console.log('req.params')
   console.log(req.params)
-  let query = {}
-  query['firebaseid'] = req.params.uid
-  User.findOne(query, function (err, user) {
-    if (err || typeof user === 'undefined') {
-      console.log(err.message)
-      res.send(err)
-    }
-    // console.log(iosapps);
-    // console.log('found: ' + user.length)
-    if (user === null || user.length === 0) {
-      let newUser = new User({
-        'firebaseid': req.params.uid,
-        'usertype': 'client',
-        'authorizedApps': []
-      })
 
-      newUser.save((err, user) => {
-        if (err) {
-          console.error(err)
-          res.send(err)
+  var query = usersRef.where('firebaseid', '==', req.params.uid).get()
+      .then(snapshot => {
+        console.log(snapshot.size)
+        if(snapshot.size === 0){
+          console.log('No such user');
+
+          let newUser = {
+            'firebaseid': req.params.uid,
+            'usertype': 'user',
+          }
+  
+          db.collection('users').add(newUser).then(ref => {
+            console.log('Added document with ID: ', ref.id);
+            res.send(ref)
+          });
         }
-        console.log('newuser')
-        console.log(user)
-        res.send(user)
+        else {
+          snapshot.forEach(doc => {
+            console.log('found user' + doc.data().firebaseid)
+            console.log(doc.id, '=>', doc.data());
+            res.send(doc.data())
+          });
+          
+        }
       })
-    } else {
-      console.log('existinguser')
-      console.log(user)
-      res.send(user)
-    }
-  })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
 }
