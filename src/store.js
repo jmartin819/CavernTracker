@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     loading: false,
     user: null,
+    userInfo: null,
     error: null,
     heroes: [],
     stats: []
@@ -16,6 +17,9 @@ export default new Vuex.Store({
   mutations: {
     setUser (state, payload) {
       state.user = payload
+    },
+    setUserInfo (state, payload) {
+      state.userInfo = payload
     },
     setHeroes (state, payload) {
       state.heroes = payload
@@ -82,12 +86,11 @@ export default new Vuex.Store({
     },
     async getUserFromDB ({commit}, payload) {
       const response = await DBService.fetchUserFromDB(payload.uid)
-      let userObj = this.getters.user
-      console.log(response.data)
-      userObj["dbData"] = response.data
+      // let userObj = this.getters.user
+      // console.log(response.data)
 
       console.log("in function")
-      commit('setUser', userObj)
+      commit('setUserInfo', response.data)
     }
   },
   getters: {
@@ -96,6 +99,9 @@ export default new Vuex.Store({
     },
     user (state) {
       return state.user
+    },
+    userInfo (state) {
+      return state.userInfo
     },
     error (state) {
       return state.error

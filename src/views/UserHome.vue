@@ -2,9 +2,9 @@
   <v-container>
     <h1>Welcome to TurboDoto.com</h1>
     <div v-if="user">
-      <h1>You are logged in. Click Heroes in the nav to browse!!!</h1>
+      <h1>You are logged in. Click Heroes in the nav to browse!</h1>
       <p>{{ user }}</p>
-      <p>userdata: {{ user.dbData }}</p>
+      <p>userdata: {{ userInfo }}</p>
     </div>
   </v-container>
 </template>
@@ -25,7 +25,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'user'
+      'user',
+      'userInfo'
     ])
   }
 }
