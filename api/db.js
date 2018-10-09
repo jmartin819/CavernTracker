@@ -2,13 +2,11 @@ var admin = require("firebase-admin")
 
 require('dotenv').config()
 
-let tempkey = JSON.parse(JSON.stringify(process.env.FB_APIKEY))
-
 var serviceAccount = {
     "type": "service_account",
     "project_id": "turbodoto",
     "private_key_id": process.env.FB_APIKEY_ID,
-    "private_key": JSON.parse(JSON.stringify(process.env.FB_APIKEY)),
+    "private_key": JSON.parse(JSON.stringify(process.env.FB_APIKEY.replace(/\\n/g, '\n'))),
     "client_email": process.env.FB_CLIENT_EMAIL,
     "client_id": process.env.FB_CLIENT_ID,
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
