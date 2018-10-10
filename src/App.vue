@@ -44,7 +44,7 @@
 
     </v-toolbar>
 
-    <v-content>
+    <v-content class="grey lighten-3">
       <router-view/>
     </v-content>
 

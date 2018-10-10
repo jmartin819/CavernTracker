@@ -1,6 +1,5 @@
 'use strict'
-var db = require('../db')
-
+const db = require('../db')
 var usersRef = db.collection('users')
 
 exports.userCheck = function (req, res) {
