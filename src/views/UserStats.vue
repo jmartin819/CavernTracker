@@ -6,7 +6,7 @@
         <v-btn v-on:click="getUserStatsFromOpenDota(userID)">Lookup User</v-btn>
     </form>
 
-    <div v-for="item in stats">
+    <div v-for="item in stats" v-bind:key=item>
       <v-card v-if="item.player_slot > 127 && item.radiant_win == 0" class="green lighten-3">
         <v-card-title primary-title>
           <div>

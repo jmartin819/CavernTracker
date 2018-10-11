@@ -1,8 +1,11 @@
 <template>
-  <v-container>
+  <div class="mr-0" :class="{'ma-0': $vuetify.breakpoint.smAndDown, 'ma-3': $vuetify.breakpoint.mdAndUp}">
+    <div v-if="error">
+      {{ error }}
+    </div>
     <div v-if="user">
       <v-layout>
-        <v-flex xs4 border>
+        <v-flex xs4>
           <div class="text-xs-center">
             <img height=200px src="@/assets/blank_avatar.png" alt="">
             <h1>{{ user.email }}</h1>
@@ -31,14 +34,14 @@
             </div>
           </div>
         </v-flex>
-        <v-flex xs8>
+        <v-flex xs8 class="pl-2 mr-0">
           <div v-if="user">
             <h1>You are logged in.</h1>
             <p>{{ user }}</p>
             <h1>User Stats:</h1>
             <p>Temporarily Disabled...</p>
             <h1>Match Stats:</h1>
-            <div v-for="item in stats">
+            <div v-for="item in stats" :key=item.match_id>
               <v-card v-if="item.player_slot > 127 && item.radiant_win == 0" class="green lighten-3">
                 <v-card-title primary-title>
                   <div>
@@ -95,7 +98,7 @@
         </v-flex>
       </v-layout>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -114,19 +117,20 @@ export default {
   computed: {
     ...mapGetters([
       'user',
-      'stats'
+      'stats',
+      'error'
     ])
   },
   methods: {
     updateUser () {
       this.$store.dispatch('updateUser', { "user": this.user })
-      this.modify=0
+      this.modify = 0
     },
     editUser () {
-      this.modify=1
+      this.modify = 1
     },
     cancelEdit () {
-      this.modify=0
+      this.modify = 0
     }
   }
 }

@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import VueFire from 'vuefire'
 import store from './store'
+import './assets/stylus/main.styl'
 
 Vue.config.productionTip = false
 

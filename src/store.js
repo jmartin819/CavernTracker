@@ -35,14 +35,23 @@ export default new Vuex.Store({
   },
   actions: {
     async refreshHeroesFromOpenDota ({ commit }) {
-      const response = await DBService.fetchHeroesFromOpenDota()
+
+      const response = await DBService.fetchHeroesFromOpenDota().catch((error) => {
+        console.log('Error fetching from OpenDota')
+        commit('setError','Error fetching from OpenDota')
+      });
+      
       let heroes = response.data
       commit('setHeroes', heroes)
     },
     async getUserStatsFromOpenDota ({ commit }, payload) {
-      const response = await DBService.fetchUserStatsFromOpenDota(payload.steamID)
+
+      const response = await DBService.fetchUserStatsFromOpenDota(payload.steamID).catch((error) => {
+        console.log('Error fetching from OpenDota')
+        commit('setError','Error fetching from OpenDota')
+      });
+
       let stats = response.data
-      console.log("stats: " + stats)
       commit('setStats', stats)
     },
     signUserIn ({ commit, dispatch }, payload) {
@@ -51,9 +60,6 @@ export default new Vuex.Store({
         .then(
           user => {
             commit('setLoading', false)
-            console.log('login worked')
-            // console.log(user)
-            // commit('setUser', user.user)
             dispatch('getUserFromDB', { 'uid': user.user.uid, 'email': user.user.email })
           }
         )
@@ -81,7 +87,11 @@ export default new Vuex.Store({
       commit('clearError')
     },
     async getUserFromDB ({ commit, dispatch }, payload) {
-      const response = await DBService.fetchUserFromDB(payload.uid)
+      const response = await DBService.fetchUserFromDB(payload.uid).catch((error) => {
+        console.log('Error fetching user from DB')
+        commit('setError','Error fetching user from DB')
+      });
+      
       let userObj = response.data
       // console.log(response.data)
       userObj.email = payload.email
@@ -93,9 +103,13 @@ export default new Vuex.Store({
       commit('setUser', userObj)
     },
     async updateUser ({ commit }, payload) {
-      const response = await DBService.updateUser(payload.user)
+      const response = await DBService.updateUser(payload.user).catch((error) => {
+        console.log('Error updating user from DB')
+        commit('setError','Error updating user from DB')
+      });
+      
       let userObj = response
-      // console.log(response)
+      console.log(response)
       // commit('setUser', userObj)
     }
   },
