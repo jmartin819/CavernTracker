@@ -29,8 +29,7 @@ export default new Router({
     {
       path: '/home',
       name: 'UserHome',
-      component: UserHome,
-      beforeEnter: AuthGuard
+      component: UserHome
     },
     {
       path: '/about',

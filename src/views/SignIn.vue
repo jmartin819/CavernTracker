@@ -1,5 +1,8 @@
 <template>
-  <auth></auth>
+  <div>
+    <loading :value="this.$store.getters.loading" message="Logging you in"></loading>
+    <auth></auth>
+  </div>
 </template>
 
 <script>
