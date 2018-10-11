@@ -10,8 +10,19 @@ exports.fetchUserByID = function (req, res) {
         return console.dir(error);
     }
     console.dir(JSON.parse(body));
+//    res.send(JSON.parse(body))
+  });
+
+  let odMatchStats = 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23'
+  Request.get(odMatchStats, (error, response, body) => {
+    if(error) {
+      return console.dir(error);
+    }
+    console.dir(JSON.parse(body));
     res.send(JSON.parse(body))
   });
+
+  //Calculations Below
 
   //template for adding other calls to open dota to return more info about the user
   /*
@@ -24,7 +35,6 @@ exports.fetchUserByID = function (req, res) {
     // res.send(JSON.parse(body))
   });
   */
-  //calculations
 
   // after all above
   // res.send
