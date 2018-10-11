@@ -4,11 +4,14 @@ export default {
   fetchHeroesFromOpenDota () {
     return api().get('https://api.opendota.com/api/heroes')
   },
-  fetchUserStatsFromOpenDota (userID) {
-    console.log('https://api.opendota.com/api/players/' + userID + '/matches?significant=0&game_mode=23')
-    return api().get('https://api.opendota.com/api/players/' + userID + '/matches?significant=0&game_mode=23')
+  fetchUserStatsFromOpenDota (steamID) {
+    // console.log('https://api.opendota.com/api/players/' + steamID + '/matches?significant=0&game_mode=23')
+    return api().get('api/opendota/' + steamID)
   },
   fetchUserFromDB (uid) {
-    return api().get('api/user/' + uid)
+    return api().get('api/auth/' + uid)
+  },
+  updateUser (user) {
+    return api().post('/api/user/' + user.firebaseid, user)
   }
 }

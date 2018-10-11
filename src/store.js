@@ -9,7 +9,6 @@ export default new Vuex.Store({
   state: {
     loading: false,
     user: null,
-    userInfo: null,
     error: null,
     heroes: [],
     stats: []
@@ -17,9 +16,6 @@ export default new Vuex.Store({
   mutations: {
     setUser (state, payload) {
       state.user = payload
-    },
-    setUserInfo (state, payload) {
-      state.userInfo = payload
     },
     setHeroes (state, payload) {
       state.heroes = payload
@@ -44,9 +40,9 @@ export default new Vuex.Store({
       commit('setHeroes', heroes)
     },
     async getUserStatsFromOpenDota ({ commit }, payload) {
-      const response = await DBService.fetchUserStatsFromOpenDota(payload.userID)
+      const response = await DBService.fetchUserStatsFromOpenDota(payload.steamID)
       let stats = response.data
-      // console.log(stats)
+      console.log("stats: " + stats)
       commit('setStats', stats)
     },
     signUserIn ({ commit, dispatch }, payload) {
@@ -57,7 +53,7 @@ export default new Vuex.Store({
             commit('setLoading', false)
             console.log('login worked')
             // console.log(user)
-            commit('setUser', user.user)
+            // commit('setUser', user.user)
             dispatch('getUserFromDB', { 'uid': user.user.uid, 'email': user.user.email })
           }
         )
@@ -84,13 +80,23 @@ export default new Vuex.Store({
     clearError ({ commit }) {
       commit('clearError')
     },
-    async getUserFromDB ({ commit }, payload) {
+    async getUserFromDB ({ commit, dispatch }, payload) {
       const response = await DBService.fetchUserFromDB(payload.uid)
-      // let userObj = this.getters.user
+      let userObj = response.data
       // console.log(response.data)
+      userObj.email = payload.email
+      userObj.firebaseid = payload.uid
+
+      dispatch('getUserStatsFromOpenDota', { 'steamID': userObj.steamID})
 
       // console.log('in function')
-      commit('setUserInfo', response.data)
+      commit('setUser', userObj)
+    },
+    async updateUser ({ commit }, payload) {
+      const response = await DBService.updateUser(payload.user)
+      let userObj = response
+      console.log(response)
+      // commit('setUser', userObj)
     }
   },
   getters: {
@@ -99,9 +105,6 @@ export default new Vuex.Store({
     },
     user (state) {
       return state.user
-    },
-    userInfo (state) {
-      return state.userInfo
     },
     error (state) {
       return state.error

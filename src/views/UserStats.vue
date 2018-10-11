@@ -82,9 +82,9 @@ export default {
     getUserStatsFromOpenDota (userID) {
       console.log("consolelogging: " + userID)
       this.$store.dispatch('getUserStatsFromOpenDota', {userID: this.userID})//.then(() => {
-//        console.log('hey')
-  //      this.$router.next()
-    //  })
+      //        console.log('hey')
+        //      this.$router.next()
+          //  })
     }
   }
 }
