@@ -38,58 +38,22 @@
           <div v-if="user">
             <h1>You are logged in.</h1>
             <p>{{ user }}</p>
+            <p>{{ LSuser }}</p>
             <h1>User Stats:</h1>
             <p>Temporarily Disabled...</p>
+            <h1>Token:</h1>
+            <p>{{ token.stsTokenManager }}</p>
             <h1>Match Stats:</h1>
-            <div v-for="item in stats" :key=item.match_id>
-              <v-card v-if="item.player_slot > 127 && item.radiant_win == 0" class="green lighten-3">
+            <div v-for="match in stats" :key=match.match_id>
+              <v-card :class="{'red lighten-3': !winOrLoss(match), 'green lighten-3': winOrLoss(match)}">
                 <v-card-title primary-title>
                   <div>
-                    <h3 class="headline mb-0">Match: {{item.match_id}}</h3>
-                    <li>Hero Played: {{ item.hero_id }}</li>
-                    <li>Duration: {{ item.duration }}</li>
-                    <li>Kills: {{ item.kills }}</li>
-                    <li>Assists: {{ item.assists }}</li>
-                    <li>Deaths: {{ item.deaths }}</li>
-                  </div>
-                </v-card-title>
-              </v-card>
-
-              <v-card v-else-if="item.player_slot > 127 && item.radiant_win == 1" class="red lighten-3">
-                <v-card-title primary-title>
-                  <div>
-                    <h3 class="headline mb-0">Match: {{item.match_id}}</h3>
-                    <li>Hero Played: {{ item.hero_id }}</li>
-                    <li>Duration: {{ item.duration }}</li>
-                    <li>Kills: {{ item.kills }}</li>
-                    <li>Assists: {{ item.assists }}</li>
-                    <li>Deaths: {{ item.deaths }}</li>
-                  </div>
-                </v-card-title>
-              </v-card>
-
-              <v-card v-else-if="item.player_slot <= 127 && item.radiant_win == 0" class="red lighten-3">
-                <v-card-title primary-title>
-                  <div>
-                    <h3 class="headline mb-0">Match: {{item.match_id}}</h3>
-                    <li>Hero Played: {{ item.hero_id }}</li>
-                    <li>Duration: {{ item.duration }}</li>
-                    <li>Kills: {{ item.kills }}</li>
-                    <li>Assists: {{ item.assists }}</li>
-                    <li>Deaths: {{ item.deaths }}</li>
-                  </div>
-                </v-card-title>
-              </v-card>
-
-              <v-card v-else class="green lighten-3">
-                <v-card-title primary-title>
-                  <div>
-                    <h3 class="headline mb-0">Match: {{item.match_id}}</h3>
-                    <li>Hero Played: {{ item.hero_id }}</li>
-                    <li>Duration: {{ item.duration }}</li>
-                    <li>Kills: {{ item.kills }}</li>
-                    <li>Assists: {{ item.assists }}</li>
-                    <li>Deaths: {{ item.deaths }}</li>
+                    <h3 class="headline mb-0">Match: {{match.match_id}}</h3>
+                    <li>Hero Played: {{ match.hero_id }}</li>
+                    <li>Duration: {{ match.duration }}</li>
+                    <li>Kills: {{ match.kills }}</li>
+                    <li>Assists: {{ match.assists }}</li>
+                    <li>Deaths: {{ match.deaths }}</li>
                   </div>
                 </v-card-title>
               </v-card>
@@ -111,19 +75,21 @@ export default {
   },
   data () {
     return {
-      modify: "0"   
+      modify: '0'
     }
   },
   computed: {
     ...mapGetters([
       'user',
       'stats',
-      'error'
+      'error',
+      'token',
+      'LSuser'
     ])
   },
   methods: {
     updateUser () {
-      this.$store.dispatch('updateUser', { "user": this.user })
+      this.$store.dispatch('updateUser', { 'user': this.user })
       this.modify = 0
     },
     editUser () {
@@ -131,6 +97,13 @@ export default {
     },
     cancelEdit () {
       this.modify = 0
+    },
+    winOrLoss (match) {
+    if((match.player_slot > 127 && match.radiant_win == 0) || (match.player_slot <= 127 && match.radiant_win == 0)) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }

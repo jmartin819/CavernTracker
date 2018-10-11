@@ -33,7 +33,11 @@
       class="white--text"
     >
       <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-btn flat icon to="/home" class="white--text">
+        <v-icon>fa-home</v-icon>
+      </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
+
       <v-btn flat class="white--text" to="/herolist">Heroes</v-btn>
       <v-btn flat class="white--text" to="/userstats">User Stats</v-btn>
       <v-spacer></v-spacer>
@@ -64,7 +68,7 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        { icon: 'fa-home', title: 'Home', link: '/' },
+        { icon: 'fa-home', title: 'Home', link: '/home' },
         { icon: 'fa-bolt', title: 'Heroes', link: '/herolist' },
         { icon: 'fa-gg', title: 'Stats', link: '/userstats' }
       ],

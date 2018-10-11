@@ -51,6 +51,7 @@ export default {
   methods: {
     onSignin () {
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password}).then(() => {
+        console.log("signed in")
         this.$router.push('/home')
       })
     },

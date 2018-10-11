@@ -10,8 +10,10 @@ export default new Vuex.Store({
     loading: false,
     user: null,
     error: null,
+    token: sessionStorage.getItem('accessToken') || '',
     heroes: [],
-    stats: []
+    stats: [],
+    LSuser: null
   },
   mutations: {
     setUser (state, payload) {
@@ -28,6 +30,12 @@ export default new Vuex.Store({
     },
     setError (state, payload) {
       state.error = payload
+    },
+    setLocalStorageUser(state, payload) {
+      state.LSuser = payload
+      console.log(payload.stsTokenManager)
+      sessionStorage.accessToken = payload.access
+      sessionStorage.refreshToken = payload.refresh
     },
     clearError (state) {
       state.error = null
@@ -60,6 +68,11 @@ export default new Vuex.Store({
         .then(
           user => {
             commit('setLoading', false)
+            console.log(user.user)
+            // commit('setLocalStorageUser', {
+            //   'access': user.user.stsTokenManager.accessToken, 
+            //   'refresh': user.user.stsTokenManager.refreshToken
+            // })
             dispatch('getUserFromDB', { 'uid': user.user.uid, 'email': user.user.email })
           }
         )
@@ -128,6 +141,13 @@ export default new Vuex.Store({
     },
     stats (state) {
       return state.stats
-    }
+    },
+    token: state => {
+      return state.token
+    },
+    LSuser: state => {
+      return state.LSuser
+    },
+    isAuthenticated: state => !!state.token
   }
 })
