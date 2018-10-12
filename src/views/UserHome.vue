@@ -99,10 +99,10 @@ export default {
       this.modify = 0
     },
     winOrLoss (match) {
-    if((match.player_slot > 127 && match.radiant_win == 0) || (match.player_slot <= 127 && match.radiant_win == 0)) {
-        return false
-      } else {
+    if((match.player_slot > 127 && match.radiant_win == 0) || (match.player_slot <= 127 && match.radiant_win == 1)) {
         return true
+      } else {
+        return false
       }
     }
   }
