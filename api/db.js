@@ -1,7 +1,5 @@
 var admin = require("firebase-admin")
 
-require('dotenv').config()
-
 var serviceAccount = {
     "type": "service_account",
     "project_id": "turbodoto",

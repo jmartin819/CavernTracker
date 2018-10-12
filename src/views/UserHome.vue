@@ -1,4 +1,6 @@
 <template>
+<div>
+  <loading :value="this.$store.getters.loading" message="Logging you in"></loading>
   <div class="mr-0" :class="{'ma-0': $vuetify.breakpoint.smAndDown, 'ma-3': $vuetify.breakpoint.mdAndUp}">
     <div v-if="error">
       {{ error }}
@@ -63,6 +65,7 @@
       </v-layout>
     </div>
   </div>
+</div>
 </template>
 
 <script>
