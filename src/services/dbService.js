@@ -8,8 +8,12 @@ export default {
     // console.log('https://api.opendota.com/api/players/' + steamID + '/matches?significant=0&game_mode=23')
     return api().get('api/opendota/' + steamID)
   },
-  fetchUserFromDB (uid) {
-    return api().get('api/auth/' + uid)
+  fetchUserFromDB (uid, token) {
+    return api().get('api/auth/' + uid, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
   },
   updateUser (user) {
     return api().post('/api/user/' + user.firebaseid, user)

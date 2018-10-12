@@ -9,7 +9,7 @@ exports.fetchUserByID = function (req, res) {
     if(error) {
         return console.dir(error);
     }
-    console.dir(JSON.parse(body));
+    // console.dir(JSON.parse(body));
 //    res.send(JSON.parse(body))
   });
 
@@ -18,7 +18,7 @@ exports.fetchUserByID = function (req, res) {
     if(error) {
       return console.dir(error);
     }
-    console.dir(JSON.parse(body));
+    // console.dir(JSON.parse(body));
     res.send(JSON.parse(body))
   });
 

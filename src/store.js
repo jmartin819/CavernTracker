@@ -100,20 +100,27 @@ export default new Vuex.Store({
       commit('clearError')
     },
     async getUserFromDB ({ commit, dispatch }, payload) {
-      const response = await DBService.fetchUserFromDB(payload.uid).catch((error) => {
+      commit('setLoading', true)
+      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then( idToken => {
+        DBService.fetchUserFromDB(payload.uid, idToken).then(response => {
+          let userObj = response.data
+          // console.log(response.data)
+          userObj.email = payload.email
+          userObj.firebaseid = payload.uid
+
+          dispatch('getUserStatsFromOpenDota', { 'steamID': userObj.steamID})
+
+          // console.log('in function')
+          commit('setUser', userObj)
+          commit('setLoading', false)
+        }).catch((error) => {
+          console.log('Error fetching user from DB')
+          commit('setError','Error fetching user from DB')
+        });
+      }).catch(function(error) {
         console.log('Error fetching user from DB')
         commit('setError','Error fetching user from DB')
       });
-      
-      let userObj = response.data
-      // console.log(response.data)
-      userObj.email = payload.email
-      userObj.firebaseid = payload.uid
-
-      dispatch('getUserStatsFromOpenDota', { 'steamID': userObj.steamID})
-
-      // console.log('in function')
-      commit('setUser', userObj)
     },
     async updateUser ({ commit }, payload) {
       const response = await DBService.updateUser(payload.user).catch((error) => {

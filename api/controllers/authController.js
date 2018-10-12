@@ -5,6 +5,7 @@ var usersRef = db.collection('users')
 exports.userCheck = function (req, res) {
   console.log('req.params')
   console.log(req.params)
+  console.log(req.headers)
 
   var query = usersRef.where('firebaseid', '==', req.params.uid).get()
       .then(snapshot => {
@@ -24,14 +25,14 @@ exports.userCheck = function (req, res) {
         }
         else {
           snapshot.forEach(doc => {
-            console.log('found user' + doc.data().firebaseid)
-            console.log(doc.id, '=>', doc.data());
+            // console.log('found user' + doc.data().firebaseid)
+            // console.log(doc.id, '=>', doc.data());
             res.send(doc.data())
-          });
-          
+          });       
         }
       })
       .catch(err => {
-        console.log('Error getting documents', err);
+        console.log('Error: could not get user document', err);
+        next(err)
       });
 }
