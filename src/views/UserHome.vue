@@ -40,8 +40,10 @@
             <p>{{ LSuser }}</p>
             <h1>User Stats:</h1>
             <p>{{ stats.userStats }}</p>
-            <h1>Token:</h1>
-            <p>{{ token.stsTokenManager }}</p>
+            <!-- <h1>Token:</h1>
+            <p>{{ token.stsTokenManager }}</p> -->
+            <h1>User Averages:</h1>
+            <p>{{ stats.averages }}</p>
             <h1>Match Stats:</h1>
             <div v-for="match in stats.matchStats" :key=match.match_id>
               <v-card :class="{'red lighten-3': !winOrLoss(match), 'green lighten-3': winOrLoss(match)}">

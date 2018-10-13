@@ -21,43 +21,22 @@ exports.fetchUserByID = async function (req, res) {
     json: true
   }
 
-
   let matchStats = await rp(req_matchStats)
   let userStats = await rp(req_userStats)
 
-  let returnObj = {"userStats": userStats, "matchStats": matchStats}
-  res.send(returnObj)
-
-  /*
-
-  async function getMatchStats () {
-    let query1 = 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23'
-    let responseMatchStats = await Request.get(query1, (error, response, body) => {
-      if(error) {
-        return console.dir(error);
-      }
-      // console.log(body)
-      return JSON.parse(body)
-    });
-    let matchStats = responseMatchStats
-
-    let query2 = 'https://api.opendota.com/api/players/' + req.params.steamID
-    const responseUserStats = await Request.get(query2, (error, response, body) => {
-      if(error) {
-          return console.dir(error);
-      }
-      // console.log(body)
-      return JSON.parse(body)
-    });
-    let userStats = responseUserStats
-
-    return({"userStats": userStats, "matchStats": matchStats})
+  let totals = {'kills': 0, 'deaths': 0, 'assists': 0}
+  for(let i = 0; i < matchStats.length; i++) {
+    // console.log(match)
+    totals.kills += matchStats[i].kills
+    totals.deaths += matchStats[i].deaths
+    totals.assists += matchStats[i].assists
   }
+  // console.log(totals)
+  // console.log(matchStats.length)
+  let averages = {'kills': (totals.kills / matchStats.length).toFixed(2), 'deaths': (totals.deaths / matchStats.length).toFixed(2), 'assists': (totals.assists / matchStats.length).toFixed(2)}
+  console.log(averages)
 
-  getMatchStats().then(result => {
-    console.log(result.userStats)
-    console.log(result.matchStats)
-    res.send(result)
-  })
-  */
+  let returnObj = {"userStats": userStats, "matchStats": matchStats, "averages": averages}
+
+  res.send(returnObj)
 }
