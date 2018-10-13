@@ -6,7 +6,8 @@
       <v-layout>
         <v-flex xs4>
           <div class="text-xs-center">
-            <img height=200px src="@/assets/blank_avatar.png" alt="">
+            <img v-bind:src="stats.userStats.profile.avatarfull" />
+            <!--<img height=200px src="@/assets/blank_avatar.png" alt="">-->
             <h1>{{ user.email }}</h1>
             <h2>SteamID: {{ user.steamID }}</h2>
             <v-btn @click="editUser">Change steamID </v-btn>
@@ -39,11 +40,19 @@
             <p>{{ user }}</p>
             <p>{{ LSuser }}</p>
             <h1>User Stats:</h1>
-            <p>{{ stats.userStats }}</p>
+            <p>Username: {{ stats.userStats.profile.personaname }}</p>
+            <p>Competitive Rank: {{ stats.userStats.competitive_rank }}</p>
             <!-- <h1>Token:</h1>
             <p>{{ token.stsTokenManager }}</p> -->
+            <h1>User Totals:</h1>
+            <p>Games played: {{ stats.totals.games }}</p>
+            <p>Kills: {{ stats.totals.kills }}</p>
+            <p>Assists: {{ stats.totals.assists }}</p>
+            <p>Deaths: {{ stats.totals.deaths }}</p>
             <h1>User Averages:</h1>
-            <p>{{ stats.averages }}</p>
+            <p>Kills per game: {{ stats.averages.kills }}</p>
+            <p>Assists per game: {{ stats.averages.assists }}</p>
+            <p>Deaths per game: {{ stats.averages.deaths }}</p>
             <h1>Match Stats:</h1>
             <div v-for="match in stats.matchStats" :key=match.match_id>
               <v-card :class="{'red lighten-3': !winOrLoss(match), 'green lighten-3': winOrLoss(match)}">

@@ -33,10 +33,11 @@ exports.fetchUserByID = async function (req, res) {
   }
   // console.log(totals)
   // console.log(matchStats.length)
+  totals.games =(matchStats.length)
   let averages = {'kills': (totals.kills / matchStats.length).toFixed(2), 'deaths': (totals.deaths / matchStats.length).toFixed(2), 'assists': (totals.assists / matchStats.length).toFixed(2)}
   console.log(averages)
 
-  let returnObj = {"userStats": userStats, "matchStats": matchStats, "averages": averages}
+  let returnObj = {"userStats": userStats, "matchStats": matchStats, "averages": averages, "totals": totals}
 
   res.send(returnObj)
 }
