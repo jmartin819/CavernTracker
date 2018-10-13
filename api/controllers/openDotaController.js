@@ -1,50 +1,63 @@
 'use strict'
-const Request = require("request")
+const rp = require('request-promise')
 
 exports.fetchUserByID = async function (req, res) {
 
   let responseObj = {}
 
-  let odMatchStats = 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23'
-  const response1 = await Request.get(odMatchStats, (error, response, body) => {
-    if(error) {
-      return console.dir(error);
-    }
-    console.log("setting timeout")
-    setTimeout(function() {
-      console.log("in timeout")
-    //  console.log("Response Object")
-    //  console.log(responseObj)
-    //  res.send(responseObj)
-    }, 5000);
-    //let temp = JSON.parse(body)
-    //console.log("temp")
-    //console.log(temp)
-    return JSON.parse(body)
-  });
-  //let temp = JSON.parse(response1.data)
-  console.log("response")
-  console.log(response1)
-  responseObj.matchStats = response1.body
+  let req_matchStats = {
+    uri: 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true
+  }
 
-  let odRequestString = 'https://api.opendota.com/api/players/' + req.params.steamID
-  let odUserInfo = {}
-  const response2 = await Request.get(odRequestString, (error, response, body) => {
-    if(error) {
+  let req_userStats = {
+    uri: 'https://api.opendota.com/api/players/' + req.params.steamID,
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true
+  }
+
+
+  let matchStats = await rp(req_matchStats)
+  let userStats = await rp(req_userStats)
+
+  let returnObj = {"userStats": userStats, "matchStats": matchStats}
+  res.send(returnObj)
+
+  /*
+
+  async function getMatchStats () {
+    let query1 = 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23'
+    let responseMatchStats = await Request.get(query1, (error, response, body) => {
+      if(error) {
         return console.dir(error);
-    }
-    return JSON.parse(body)
- 
-  });
-  responseObj.userStats = response2.data
+      }
+      // console.log(body)
+      return JSON.parse(body)
+    });
+    let matchStats = responseMatchStats
 
+    let query2 = 'https://api.opendota.com/api/players/' + req.params.steamID
+    const responseUserStats = await Request.get(query2, (error, response, body) => {
+      if(error) {
+          return console.dir(error);
+      }
+      // console.log(body)
+      return JSON.parse(body)
+    });
+    let userStats = responseUserStats
 
-  
+    return({"userStats": userStats, "matchStats": matchStats})
+  }
 
-
-  //Calculations Below
-
-  // after all above
-  // res.send
-
+  getMatchStats().then(result => {
+    console.log(result.userStats)
+    console.log(result.matchStats)
+    res.send(result)
+  })
+  */
 }

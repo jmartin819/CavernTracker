@@ -3,13 +3,13 @@ const db = require('../db')
 var usersRef = db.collection('users')
 
 exports.userCheck = function (req, res) {
-  console.log('req.params')
-  console.log(req.params)
-  console.log(req.headers)
+  // console.log('req.params')
+  // console.log(req.params)
+  // console.log(req.headers)
 
   var query = usersRef.where('firebaseid', '==', req.params.uid).get()
       .then(snapshot => {
-        console.log(snapshot.size)
+        // console.log(snapshot.size)
         if(snapshot.size === 0){
           console.log('No such user');
 

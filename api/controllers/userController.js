@@ -4,10 +4,10 @@ var usersRef = db.collection('users')
 var OD = require('./openDotaController')
 
 exports.updateUser = function (req, res) {
-  console.log('req.params')
-  console.log(req.params)
-  console.log('req.body')
-  console.log(req.body)
+  // console.log('req.params')
+  // console.log(req.params)
+  // console.log('req.body')
+  // console.log(req.body)
 
   var query = usersRef.where('firebaseid', '==', req.params.uid).get()
       .then(snapshot => {

@@ -60,6 +60,7 @@ export default new Vuex.Store({
       });
 
       let stats = response.data
+      console.log(stats)
       commit('setStats', stats)
     },
     signUserIn ({ commit, dispatch }, payload) {
@@ -68,7 +69,7 @@ export default new Vuex.Store({
         .then(
           user => {
             commit('setLoading', false)
-            console.log(user.user)
+            // console.log(user.user)
             // commit('setLocalStorageUser', {
             //   'access': user.user.stsTokenManager.accessToken, 
             //   'refresh': user.user.stsTokenManager.refreshToken
