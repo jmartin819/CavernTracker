@@ -1,40 +1,48 @@
 'use strict'
 const Request = require("request")
 
-exports.fetchUserByID = function (req, res) {
+exports.fetchUserByID = async function (req, res) {
 
-  let odRequestString = 'https://api.opendota.com/api/players/' + req.params.steamID
-  let odUserInfo = {}
-  Request.get(odRequestString, (error, response, body) => {
-    if(error) {
-        return console.dir(error);
-    }
-    // console.dir(JSON.parse(body));
-//    res.send(JSON.parse(body))
-  });
+  let responseObj = {}
 
   let odMatchStats = 'https://api.opendota.com/api/players/' + req.params.steamID + '/matches?significant=0&game_mode=23'
-  Request.get(odMatchStats, (error, response, body) => {
+  const response1 = await Request.get(odMatchStats, (error, response, body) => {
     if(error) {
       return console.dir(error);
     }
-    // console.dir(JSON.parse(body));
-    res.send(JSON.parse(body))
+    console.log("setting timeout")
+    setTimeout(function() {
+      console.log("in timeout")
+    //  console.log("Response Object")
+    //  console.log(responseObj)
+    //  res.send(responseObj)
+    }, 5000);
+    //let temp = JSON.parse(body)
+    //console.log("temp")
+    //console.log(temp)
+    return JSON.parse(body)
   });
+  //let temp = JSON.parse(response1.data)
+  console.log("response")
+  console.log(response1)
+  responseObj.matchStats = response1.body
 
-  //Calculations Below
-
-  //template for adding other calls to open dota to return more info about the user
-  /*
   let odRequestString = 'https://api.opendota.com/api/players/' + req.params.steamID
-  Request.get(odRequestString, (error, response, body) => {
+  let odUserInfo = {}
+  const response2 = await Request.get(odRequestString, (error, response, body) => {
     if(error) {
         return console.dir(error);
     }
-    console.dir(JSON.parse(body));
-    // res.send(JSON.parse(body))
+    return JSON.parse(body)
+ 
   });
-  */
+  responseObj.userStats = response2.data
+
+
+  
+
+
+  //Calculations Below
 
   // after all above
   // res.send
