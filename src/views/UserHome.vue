@@ -2,7 +2,7 @@
 <div>
   <loading :value="this.$store.getters.loading" message="Logging you in"></loading>
   <div class="mr-0" :class="{'ma-0': $vuetify.breakpoint.smAndDown, 'ma-3': $vuetify.breakpoint.mdAndUp}">
-    <div v-if="user">
+    <div v-if="(user && stats.userStats.profile)">
       <v-layout>
         <v-flex xs4>
           <div class="text-xs-center">

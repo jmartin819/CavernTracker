@@ -12,7 +12,10 @@ export default new Vuex.Store({
     error: null,
     token: sessionStorage.getItem('accessToken') || '',
     heroes: [],
-    stats: [],
+    stats: {
+      'userStats': {},
+      'matchStats': {}
+    },
     LSuser: null
   },
   mutations: {

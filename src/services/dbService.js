@@ -17,5 +17,8 @@ export default {
   },
   updateUser (user) {
     return api().post('/api/user/' + user.firebaseid, user)
+  },
+  fetchAllUsersFromDB () {
+    return api().get('/api/users/')
   }
 }

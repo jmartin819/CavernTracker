@@ -16,6 +16,9 @@ module.exports = function (app) {
   app.route('/api/user/:uid')
     .post(user.updateUser)
 
+  app.route('/api/users/')
+    .get(user.getAllUsers)
+
   app.route('/api/opendota/:steamID')
     .get(od.fetchUserByID)
 }
