@@ -129,11 +129,11 @@ export default new Vuex.Store({
     async updateUser ({ commit }, payload) {
       const response = await DBService.updateUser(payload.user).catch((error) => {
         console.log('Error updating user from DB')
-        commit('setError','Error updating user from DB')
-      });
-      
+        console.log(error)
+        commit('setError', 'Error updating user from DB')
+      })
       let userObj = response
-      console.log(response)
+      console.log(userObj)
       // commit('setUser', userObj)
     }
   },

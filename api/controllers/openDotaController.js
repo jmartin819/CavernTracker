@@ -22,23 +22,28 @@ async function processPlayerInfo(steamId, matchStats, userStats) {
 
   usersRef.where('steamID', '==', steamId).get()
   .then(snapshot => {
-    snapshot.forEach(userDoc => {
+    console.log(snapshot)
+    if(snapshot.size === 0){
+      console.log("no user found -- need to fix this")
+    } else {
+      snapshot.forEach(userDoc => {
 
-      let userObj = userDoc.data()
+        let userObj = userDoc.data()
 
-      userObj.averages = avgObj
-      userObj.totals = totals
+        userObj.averages = avgObj
+        userObj.totals = totals
+        
+        console.log(userDoc.data())
+        
+        userDoc.ref.update(userObj).then(ref => {
 
-      console.log(userDoc.data())
-      
-      userDoc.ref.update(userObj).then(ref => {
+          // let userObj = req.body
+          // OD_userinfo = OD.fetchUserByID(req.params.uid)
 
-        // let userObj = req.body
-        // OD_userinfo = OD.fetchUserByID(req.params.uid)
-
-        console.log('Updated document with ID: ', ref);
+          console.log('Updated document with ID: ', ref);
+        });
       });
-    });
+    }
   })
   .catch(err => {
     console.log('Error getting documents', err);
