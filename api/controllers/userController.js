@@ -28,8 +28,11 @@ exports.updateUser = function (req, res) {
     });
 }
 
-exports.getAllUsers = function (req, res) {
+exports.getUserBySteamID = (req, res) => {
 
+}
+
+exports.getAllUsers = function (req, res) {
   // console.log('hitting get all users in api')
   var query = usersRef.get()
     .then(snapshot => {
