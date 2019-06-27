@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     loading: false,
     user: null,
+    recentUsers: [],
     error: null,
     token: sessionStorage.getItem('accessToken') || '',
     heroes: [],
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setStats (state, payload) {
       state.stats = payload
+    },
+    setRecentUsers (state, payload) {
+      state.recentUsers = payload
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -66,13 +70,22 @@ export default new Vuex.Store({
       console.log(stats)
       commit('setStats', stats)
     },
+    async getRecentUsers ({commit}, payload) {
+      const response = await DBService.fetchAllUsersFromDB().catch((error) => {
+        console.log('Error fetching users from OpenDota')
+        commit('setError','Error fetching users from OpenDota')
+      });
+
+      let users = response.data
+      commit('setRecentUsers', users)
+    },
     signUserIn ({ commit, dispatch }, payload) {
       commit('setLoading', true)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
             commit('setLoading', false)
-            // console.log(user.user)
+            console.log("logging user: ", user)
             // commit('setLocalStorageUser', {
             //   'access': user.user.stsTokenManager.accessToken, 
             //   'refresh': user.user.stsTokenManager.refreshToken
@@ -158,6 +171,9 @@ export default new Vuex.Store({
     },
     LSuser: state => {
       return state.LSuser
+    },
+    recentUsers (state) {
+      return state.recentUsers
     },
     isAuthenticated: state => !!state.token
   }

@@ -1,7 +1,15 @@
 <template>
   <v-container>
-    <h1>Compare 2 Users Below</h1>
     <v-layout>
+      <v-flex>
+        <h1>Previous searches</h1>
+        {{ this.recentUsers }}
+      </v-flex>
+    ></v-layout>
+    <v-layout row>
+      <h1>Compare 2 Users Below</h1>
+    </v-layout>
+    <v-layout row>
       <v-flex xs6 md12 class="pa-2 mr-2">
         <searchbox v-on:userdata="user1data = $event"></searchbox>
       </v-flex>
@@ -9,6 +17,7 @@
         <searchbox v-on:userdata="user2data = $event"></searchbox>
       </v-flex>
     </v-layout>
+    
     <v-layout row wrap v-if="searchResults">
       <v-flex xs12>
         {{ user1data.userStats.mmr_estimate.estimate }}
@@ -68,6 +77,7 @@
 import loading from '../components/Loading.vue'
 import searchbox from '../components/Searchbox.vue'
 import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import DBService from '../services/dbService.js'
 
 export default {
@@ -99,10 +109,11 @@ export default {
     }
   },
   mounted () {
-    // this.getAllUsers()
+    this.getRecentUsers()
   },
   computed: {
     ...mapGetters([
+      'recentUsers'
     ]),
     searchResults: function () {
       if(Object.keys(this.user1data).length != 0 && Object.keys(this.user2data).length != 0){
@@ -133,6 +144,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      getRecentUsers: 'getRecentUsers'
+    }),
     async getUserFromOD () {
       DBService.fetchUserStatsFromOpenDota()
         .then((response) => {

@@ -8,6 +8,7 @@ async function processPlayerInfo(incoming_steamId, matchStats, userStats) {
 
   console.log(userStats)
   console.log("match stats length: ", matchStats.length)
+  console.log("processing player info for: ", incoming_steamId)
 
   let totals = {'kills': 0, 'deaths': 0, 'assists': 0}
   for(let i = 0; i < matchStats.length; i++) {
@@ -26,6 +27,7 @@ async function processPlayerInfo(incoming_steamId, matchStats, userStats) {
     // console.log(snapshot)
     if(snapshot.size === 0){
       // console.log("no user found -- need to fix this")
+      console.log("userStats: ", userStats.profile)
 
       let newUser = {
         'firebaseid': null,
@@ -33,6 +35,7 @@ async function processPlayerInfo(incoming_steamId, matchStats, userStats) {
         'averages': avgObj,
         'totals': totals,
         'steamid': incoming_steamId,
+        'personaname': userStats.profile.personaname
       }
 
       usersRef.doc(incoming_steamId).set(newUser)
@@ -49,6 +52,7 @@ async function processPlayerInfo(incoming_steamId, matchStats, userStats) {
 
         let userObj = userDoc.data()
 
+        userObj.username = userStats.profile.personname
         userObj.averages = avgObj
         userObj.totals = totals
         

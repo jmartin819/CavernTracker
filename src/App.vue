@@ -33,7 +33,7 @@
       class="white--text"
     >
       <v-toolbar-side-icon class="white--text" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn flat icon to="/home" class="white--text">
+      <v-btn flat icon to="/" class="white--text">
         <v-icon>fa-home</v-icon>
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>

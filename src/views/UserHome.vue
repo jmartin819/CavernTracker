@@ -54,6 +54,17 @@
             <p>Assists per game: {{ stats.averages.assists }}</p>
             <p>Deaths per game: {{ stats.averages.deaths }}</p>
             <h1>Match Stats:</h1>
+
+              <v-data-table
+                :headers="headers"
+                :items="stats.matchStats"
+                class="elevation-1"
+              >
+                <template v-slot:items="props">
+                  <td>{{ props.item }}</td>
+                </template>
+              </v-data-table>
+
             <div v-for="match in stats.matchStats" :key=match.match_id>
               <v-card :class="{'red lighten-3': !winOrLoss(match), 'green lighten-3': winOrLoss(match)}">
                 <v-card-title primary-title>
@@ -86,7 +97,13 @@ export default {
   },
   data () {
     return {
-      modify: '0'
+      modify: '0',
+      headers: [
+        {
+          text: 'Match',
+          value: 'matchid'
+        }
+      ]
     }
   },
   computed: {

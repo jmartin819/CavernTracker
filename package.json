@@ -10,12 +10,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit",
-    "postinstall": "npm run build"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "body-parser": "^1.18.1",
     "connect-history-api-fallback": "^1.5.0",
     "cors": "^2.8.4",
@@ -26,18 +25,18 @@
     "mongoose": "^5.3.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "vue": "^2.5.17",
+    "vue": "^2.6",
     "vue-router": "^3.0.1",
     "vuefire": "^2.0.0-alpha.15",
-    "vuetify": "^1.2.8",
+    "vuetify": "^1.5.16",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-e2e-cypress": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-plugin-unit-jest": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
+    "@vue/cli-plugin-unit-jest": "^3.8.0",
+    "@vue/cli-service": "^3.8.4",
     "@vue/eslint-config-standard": "^3.0.4",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
@@ -45,7 +44,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-vuetify": "^0.2.0",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.6"
   },
   "engines": {
     "node": "10.4.1",
