@@ -56,16 +56,21 @@
             <h1>Match Stats:</h1>
 
               <v-data-table
-                :headers="headers"
+                :headers="stats.headers"
                 :items="stats.matchStats"
                 class="elevation-1"
               >
                 <template v-slot:items="props">
-                  <td>{{ props.item }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.match_id }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.hero_id }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.duration }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.kills }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.assists }}</td>
+                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.deaths }}</td>
                 </template>
               </v-data-table>
 
-            <div v-for="match in stats.matchStats" :key=match.match_id>
+            <!--<div v-for="match in stats.matchStats" :key=match.match_id>
               <v-card :class="{'red lighten-3': !winOrLoss(match), 'green lighten-3': winOrLoss(match)}">
                 <v-card-title primary-title>
                   <div>
@@ -78,7 +83,7 @@
                   </div>
                 </v-card-title>
               </v-card>
-            </div>
+            </div>-->
           </div>
         </v-flex>
       </v-layout>

@@ -103,7 +103,16 @@ exports.fetchUserByID = async function (req, res) {
 
   // console.log(calcObj)
 
-  let returnObj = {"userStats": userStats, "matchStats": matchStats, "averages": calcObj.averages, "totals": calcObj.totals}
+  let headers = [
+    { text: 'Match ID', value: 'match_id' },
+    { text: 'Hero', value: 'hero_id' },
+    { text: 'Duration', value: 'duration' },
+    { text: 'Kills', value: 'kills' },
+    { text: 'Assists', value: 'assists' },
+    { text: 'Deaths', value: 'deaths' }
+  ]
+
+  let returnObj = {"userStats": userStats, "matchStats": matchStats, "averages": calcObj.averages, "totals": calcObj.totals, "headers":headers}
 
   console.log(returnObj.userStats, returnObj.averages)
 
