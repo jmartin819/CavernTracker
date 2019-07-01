@@ -9,8 +9,8 @@
             <img v-bind:src="stats.userStats.profile.avatarfull" />
           </div>
           <div class="text-xs-center">
-            <h1>{{ user.email }}</h1>
-            <h2>SteamID: {{ user.steamID }}</h2>
+            <h2>{{ user.email }}</h2>
+            <h3>SteamID: {{ user.steamID }}</h3>
             <v-btn @click="editUser">Change steamID </v-btn>
             <div v-if="modify === 1">
               <div v-if="user">
@@ -39,7 +39,7 @@
           <div v-if="user">
             <h1>User:</h1>
             <p>Username: {{ stats.userStats.profile.personaname }}</p>
-            <p>Competitive Rank: {{ stats.userStats.competitive_rank }}</p>
+            <p>MMR Estimate: {{ stats.userStats.mmr_estimate.estimate }}</p>
           </div>
         </v-flex>
         <v-flex xs3>
@@ -65,7 +65,6 @@
         <v-flex xs12 class="pl-2 mr-0">
           <div v-if="user">
             <h1>Match Stats:</h1>
-
               <v-data-table
                 :headers="stats.headers"
                 :items="stats.matchStats"
@@ -74,12 +73,16 @@
                 class="elevation-1"
               >
                 <template v-slot:items="props">
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.match_id }}</td>
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.hero_id }}</td>
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.duration }}</td>
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.kills }}</td>
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.deaths }}</td>
-                  <td :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">{{ props.item.assists }}</td>
+                  <tr :class="{'red lighten-3': !winOrLoss(props.item), 'green lighten-3': winOrLoss(props.item)}">
+                    <td>{{ props.item.match_id }}</td>
+                    <td>
+                      <i :class="heroIconClass(props.item.hero_id)"></i>
+                    </td>
+                    <td>{{ props.item.duration }}</td>
+                    <td>{{ props.item.kills }}</td>
+                    <td>{{ props.item.deaths }}</td>
+                    <td>{{ props.item.assists }}</td>
+                  </tr>
                 </template>
               </v-data-table>
           </div>
@@ -89,6 +92,10 @@
   </div>
 </div>
 </template>
+
+<style>
+  @import '../../node_modules/dota2-minimap-hero-sprites/assets/stylesheets/dota2minimapheroes.css';
+</style>
 
 <script>
 import loading from '../components/Loading.vue'
@@ -116,7 +123,7 @@ export default {
       'error',
       'token',
       'LSuser'
-    ]),
+    ])
   },
   methods: {
     updateUser () {
@@ -128,6 +135,9 @@ export default {
     },
     cancelEdit () {
       this.modify = 0
+    },
+    heroIconClass (hero_id) {
+      return "d2mh hero-" + hero_id.toString()
     },
     winOrLoss (match) {
     if((match.player_slot > 127 && match.radiant_win == 0) || (match.player_slot <= 127 && match.radiant_win == 1)) {

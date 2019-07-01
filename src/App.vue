@@ -53,7 +53,7 @@
     </v-content>
 
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2018 No Salt Studios</span>
+      <span>&copy; 2019 No Salt Studios</span>
     </v-footer>
   </v-app>
 </template>
