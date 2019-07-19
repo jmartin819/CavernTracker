@@ -5,6 +5,7 @@ import SignIn from '@/views/SignIn'
 import HeroList from '@/views/HeroList'
 import UserStats from '@/views/UserStats'
 import AuthGuard from './plugins/auth-guard'
+import Landing from '@/views/Landing.vue'
 import Home from '@/views/Home.vue'
 
 Vue.use(Router)
@@ -18,8 +19,8 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'Landing',
+      component: Landing
     },
     {
       path: '/signin',

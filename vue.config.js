@@ -1,3 +1,6 @@
 module.exports = {
-  assetsDir: 'assets'
+  assetsDir: 'assets',
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 }
